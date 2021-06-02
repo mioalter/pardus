@@ -6,7 +6,7 @@ A _Context-Free Grammar_ consists of
 
 * A set `V` of _variables_ or _nonterminals_
 * A set `T` of terminals
-* A relation `R` over `V` and `(V ∪ T)<sup>*</sup>` where "star" denotes the Kleene star
+* A relation `R` over `V` and `(V ∪ T)*` where "star" denotes the Kleene star
 * An element `S` of `V` called the _start symbol_.
 
 `(V ∪ T)*` is the set of strings of 0 or more variables and terminals.
