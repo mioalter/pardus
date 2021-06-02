@@ -1,8 +1,10 @@
-package tigris.interpreter
+package pardus.interpreter
 
 object Types {
 
   type Id = String
+  type Program = List[Stm]
+  type Table = Map[Id, Int]
 
   sealed trait BinOp
   object BinOp {
@@ -25,9 +27,6 @@ object Types {
     final case class NumExp(value: Int) extends Exp
     final case class OpExp(left: Exp, op: BinOp, right: Exp) extends Exp
     final case class EseqExp(stm: Stm, exp: Exp) extends Exp
-
-
   }
-
 
 }

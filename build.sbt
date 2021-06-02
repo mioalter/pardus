@@ -7,7 +7,7 @@ ThisBuild / organizationName := "mioalter"
 
 lazy val root = (project in file("."))
   .settings(
-    name := "tigris",
+    name := "pardus",
     libraryDependencies += scalaTest % Test,
     libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.14.1" % "test",
     libraryDependencies += "org.typelevel" %% "discipline-core" % "1.0.0",
