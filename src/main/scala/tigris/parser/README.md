@@ -44,7 +44,7 @@ so it is the subset of strings of terminals that can be derived from `S`.
 TODO: example from Hopcraft and Ullman where
 * `V = {E, I}`
 * `T = {*, +, (, ), a, b, 0, 1}`
-* `R = {(E, I), (E, E+E), (E, E*E), (I, a), (I, b), (I, Ia), (I, Ib), (I, I0), (I, I1) }
+* `R = {(E, I), (E, E+E), (E, E*E), (I, a), (I, b), (I, Ia), (I, Ib), (I, I0), (I, I1) }`
 * `S = E`
 
 Note: there are clearly some assumptions about the production rules because we
