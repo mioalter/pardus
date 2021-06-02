@@ -10,7 +10,8 @@ lazy val root = (project in file("."))
     name := "tigris",
     libraryDependencies += scalaTest % Test,
     libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.14.1" % "test",
-    libraryDependencies += "org.typelevel" %% "discipline-core" % "1.0.0"
+    libraryDependencies += "org.typelevel" %% "discipline-core" % "1.0.0",
+    libraryDependencies += "com.lihaoyi" %% "fastparse" % "2.2.2"
   )
 
 scalacOptions ++= Seq("-deprecation", "-feature")
