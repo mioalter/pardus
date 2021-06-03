@@ -3,8 +3,12 @@ package pardus.interpreter
 object Types {
 
   type Id = String
-  type Program = List[Stm]
-  type Table = Map[Id, Int]
+
+  case class Table(map: Map[Id, Int]) {
+    def update(key: Id, value: Int): Table =
+      Table(map.updated(key, value))
+    def lookup(key: Id): Int = map(key)
+  }
 
   sealed trait BinOp
   object BinOp {
