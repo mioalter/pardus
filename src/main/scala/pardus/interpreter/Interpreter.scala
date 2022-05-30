@@ -17,7 +17,10 @@ object Interpreter {
     case Exp.EseqExp(stm, exp) => maxArgs(stm).max(maxArgsE(exp))
   }
 
-  def interp(stm: Stm): Unit = ???
+  def interp(stm: Stm): Unit = {
+    val result = interpStm(stm, Types.emptyTable)
+  }
+
   def interpStm(stm: Stm, table: Table): Table = stm match {
     case Stm.CompoundStm(left, right) =>
       val nextTable = interpStm(left, table)
@@ -34,6 +37,7 @@ object Interpreter {
       val nextTable = interpStm(Stm.PrintStm(e::Nil), table)
       interpStm(Stm.PrintStm(es), nextTable)
   }
+
   def interpExp(exp: Exp, table: Table): (Int, Table) = exp match {
     case Exp.IdExp(id) => (table.lookup(id), table)
     case Exp.NumExp(i) => (i, table)
