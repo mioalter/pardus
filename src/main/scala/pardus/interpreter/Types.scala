@@ -10,6 +10,8 @@ object Types {
     def lookup(key: Id): Int = map(key)
   }
 
+  val emptyTable = Table(Map.empty)
+
   sealed trait BinOp
   object BinOp {
     final case object Plus extends BinOp
