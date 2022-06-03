@@ -3,6 +3,7 @@ package pardus.lexer
 sealed trait Token
 
 object Token {
+  // Reserved words
   case object Type extends Token
   case object Var extends Token
   case object Function extends Token
@@ -20,6 +21,7 @@ object Token {
   case object Then extends Token
   case object If extends Token
   case object Array extends Token
+  // Operators
   case object Assign extends Token
   case object Or extends Token
   case object And extends Token
@@ -33,6 +35,7 @@ object Token {
   case object Times extends Token
   case object Minus extends Token
   case object Plus extends Token
+  // Punctuation
   case object Dot extends Token
   case object RBrace extends Token
   case object LBrace extends Token
@@ -43,6 +46,7 @@ object Token {
   case object Semicolon extends Token
   case object Colon extends Token
   case object Comma extends Token
+  //
   case class String(value: String) extends Token
   case class Int(value: Int) extends Token
   case class Id(value: String) extends Token
