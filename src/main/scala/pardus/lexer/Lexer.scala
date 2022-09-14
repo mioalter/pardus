@@ -4,10 +4,25 @@ import fastparse._,
 NoWhitespace._
 
 object Lexer {
-  // We need one parser for each of type of token
+
+  /**
+    * Cool, we can make a P[Token].
+    * Now we have to make
+    * - one big uberP[Token] by |-ing all of the individual ones together
+    * - a helper function `go`
+    *   (inputString, P[Token]) => Option[(remainingString, matchedString, Token)]
+    *   by taking the index on which the parsing completes and doing a take/drop.
+    * - a helper function that finds the longest match
+    *   by taking a (remainingString, matchedString, Token)
+    *   and doing a
+    *   case (r::rs, m::ms, T) => go(m :: ms :+ r, uberP)
+    *   to try to keep matching.
+    *   That doesn't look quite right, but something like that.
+    */
+    // We need one parser for each of type of token
 //  // Reserved words
 //  case object Type extends Token
-    def typeP[_ : P] = P("t" ~ "y" ~ "p" ~ "e")
+    def typeP[_ : P]: P[Token] = P("t" ~ "y" ~ "p" ~ "e").map(_ => Token.Type)
 //  case object Var extends Token
     def varP[_ : P] = P("v" ~ "a" ~ "r")
 //  case object Function extends Token
