@@ -65,25 +65,45 @@ object Lexer {
 
     /** Operators **/
 
-//  case object Assign extends Token
-//  case object Or extends Token
-//  case object And extends Token
-//  case object GE extends Token
-//  case object GT extends Token
-//  case object LE extends Token
-//  case object LT extends Token
-//  case object NEQ extends Token
-//  case object EQ extends Token
-//  case object Divide extends Token
-//  case object Times extends Token
-//  case object Minus extends Token
-//  case object Plus extends Token
-//  // Punctuation
-//  case object Dot extends Token
-//  case object RBrace extends Token
-//  case object LBrace extends Token
-//  case object RBrack extends Token
-//  case object LBrack extends Token
+    /** Assign **/
+    def assignP[Q: P]: P[Token] = P("=").map(_ => Token.Assign)
+    /** Or **/
+    def orP[Q: P]: P[Token] = P("||").map(_ => Token.Or)
+    /** And **/
+    def andP[Q: P]: P[Token] = P("&&").map(_ => Token.And)
+    /** GE **/
+    def geP[Q: P]: P[Token] = P(">" ~ "=").map(_ => Token.GE)
+    /** GT **/
+    def gtP[Q: P]: P[Token] = P(">").map(_ => Token.GT)
+    /** LE **/
+    def leP[Q: P]: P[Token] = P("<" ~ "=").map(_ => Token.LE)
+    /** LT **/
+    def ltP[Q: P]: P[Token] = P("<").map(_ => Token.LT)
+    /** NEQ **/
+    def neqP[Q: P]: P[Token] = P("!" ~ "=").map(_ => Token.NEQ)
+    /** EQ **/
+    def eqP[Q: P]: P[Token] = P("==").map(_ => Token.EQ)
+    /** Divide **/
+    def divideP[Q: P]: P[Token] = P("/").map(_ => Token.Divide)
+    /** Times **/
+    def timesP[Q: P]: P[Token] = P("x").map(_ => Token.Times)
+    /** Minus **/
+    def minusP[Q: P]: P[Token] = P("-").map(_ => Token.Minus)
+    /** Plus **/
+    def plusP[Q: P]: P[Token] = P("+").map(_ => Token.Plus)
+
+
+    /** Punctuation **/
+    /** Dot **/
+    def dotP[Q: P]: P[Token] = P(".").map(_ => Token.Dot)
+    /** RBrace **/
+    def rbraceP[Q: P]: P[Token] = P("}").map(_ => Token.RBrace)
+    /** LBrace **/
+    def lbraceP[Q: P]: P[Token] = P("{").map(_ => Token.LBrace)
+    /** RBrack **/
+    def rbrackP[Q: P]: P[Token] = P("]").map(_ => Token.RBrack)
+    /** LBrack **/
+    def lbrackP[Q: P]: P[Token] = P("[").map(_ => Token. LBrack)
 //  case object RParen extends Token
 //  case object LParen extends Token
 //  case object Semicolon extends Token
