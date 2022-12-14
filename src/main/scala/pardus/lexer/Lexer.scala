@@ -18,34 +18,53 @@ object Lexer {
     *   case (r::rs, m::ms, T) => go(m :: ms :+ r, uberP)
     *   to try to keep matching.
     *   That doesn't look quite right, but something like that.
+    *
+    * We need one parser for each of type of token
+    * fastparse would write typeP[_ : P]: P[Token], but this gives a compiler
+    * warning that wildcards are the top level are not allowed.
     */
-    // We need one parser for each of type of token
-//  // Reserved words
-//  case object Type extends Token
-    def typeP[_ : P]: P[Token] = P("t" ~ "y" ~ "p" ~ "e").map(_ => Token.Type)
-//  case object Var extends Token
-    def varP[_ : P] = P("v" ~ "a" ~ "r")
-//  case object Function extends Token
-    def functionP[_ : P] = P("f" ~ "u" ~ "n" ~ "c" ~ "t" ~ "i" ~ "o" ~ "n")
-//  case object Break extends Token
-    def breakP[_ : P] = P("b" ~ "r" ~ "e" ~ "a" ~ "k")
-//  case object Of extends Token
-    def ofP[_ : P] = P("o" ~ "f")
-//  case object End extends Token
-    def endP[_ : P] = P("e" ~ "n" ~ "d")
-//  case object In extends Token
-    def inP[_ : P] = P("i" ~ "n")
-//  case object Nil extends Token
-//  case object Let extends Token
-//  case object Do extends Token
-//  case object To extends Token
-//  case object For extends Token
-//  case object While extends Token
-//  case object Else extends Token
-//  case object Then extends Token
-//  case object If extends Token
-//  case object Array extends Token
-//  // Operators
+
+    /** Reserved words **/
+
+    /** Type **/
+    def typeP[Q : P]: P[Token] = P("t" ~ "y" ~ "p" ~ "e").map(_ => Token.Type)
+    /** Var **/
+    def varP[Q : P]: P[Token] = P("v" ~ "a" ~ "r").map(_ => Token.Var)
+    /** Function **/
+    def functionP[Q : P]: P[Token] =
+      P("f" ~ "u" ~ "n" ~ "c" ~ "t" ~ "i" ~ "o" ~ "n").map(_ => Token.Function)
+    /** Break **/
+    def breakP[Q : P]: P[Token] =
+      P("b" ~ "r" ~ "e" ~ "a" ~ "k").map(_ => Token.Break)
+    /** Of **/
+    def ofP[Q : P]: P[Token] = P("o" ~ "f").map(_ => Token.Of)
+    /** End **/
+    def endP[Q : P]: P[Token] = P("e" ~ "n" ~ "d").map(_ => Token.End)
+    /** In **/
+    def inP[Q : P]: P[Token] = P("i" ~ "n").map(_ => Token.In)
+    /** Nil **/
+    def nilP[Q : P]: P[Token] = P("n" ~ "i" ~ "l").map(_ => Token.Nil)
+    /** Let **/
+    def letP[Q: P]: P[Token] = P("l" ~ "e" ~ "t").map(_ => Token.Let)
+    /** Do **/
+    def doP[Q: P]: P[Token] = P("d" ~ "o").map(_ => Token.Do)
+    /** To **/
+    def toP[Q: P]: P[Token] = P("t" ~ "o").map(_ => Token.To)
+    /** For **/
+    def forP[Q: P]: P[Token] = P("f" ~ "o" ~ "r").map(_ => Token.For)
+    /** While **/
+    def whileP[Q: P]: P[Token] = P("w" ~ "h" ~ "i" ~ "l" ~ "e").map(_ => Token.While)
+    /** Else **/
+    def elseP[Q: P]: P[Token] = P("e" ~ "l" ~ "s" ~ "e").map(_ => Token.Else)
+    /** Then **/
+    def thenP[Q: P]: P[Token] = P("t" ~ "h" ~ "e" ~ "n").map(_ => Token.Then)
+    /** If **/
+    def ifP[Q: P]: P[Token] = P("i" ~ "f").map(_ => Token.If)
+    /** Array **/
+    def arrayP[Q: P]: P[Token] = P("a" ~ "r" ~ "r" ~ "a" ~ "y").map(_ => Token.Array)
+
+    /** Operators **/
+
 //  case object Assign extends Token
 //  case object Or extends Token
 //  case object And extends Token
