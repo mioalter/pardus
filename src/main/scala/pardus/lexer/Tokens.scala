@@ -47,8 +47,8 @@ object Token {
   case object Colon extends Token
   case object Comma extends Token
   //
-  case class String(value: String) extends Token
-  case class Int(value: Int) extends Token
+  case class StringToken(value: String) extends Token
+  case class IntToken(value: Int) extends Token
   case class Id(value: String) extends Token
   case object EOF extends Token
 }
