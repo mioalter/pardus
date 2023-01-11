@@ -39,11 +39,13 @@ object Lexer {
     def doP[Q: P]: P[Token] = P("d" ~ "o").map(_ => Token.Do)
     def toP[Q: P]: P[Token] = P("t" ~ "o").map(_ => Token.To)
     def forP[Q: P]: P[Token] = P("f" ~ "o" ~ "r").map(_ => Token.For)
-    def whileP[Q: P]: P[Token] = P("w" ~ "h" ~ "i" ~ "l" ~ "e").map(_ => Token.While)
+    def whileP[Q: P]: P[Token] =
+      P("w" ~ "h" ~ "i" ~ "l" ~ "e").map(_ => Token.While)
     def elseP[Q: P]: P[Token] = P("e" ~ "l" ~ "s" ~ "e").map(_ => Token.Else)
     def thenP[Q: P]: P[Token] = P("t" ~ "h" ~ "e" ~ "n").map(_ => Token.Then)
     def ifP[Q: P]: P[Token] = P("i" ~ "f").map(_ => Token.If)
-    def arrayP[Q: P]: P[Token] = P("a" ~ "r" ~ "r" ~ "a" ~ "y").map(_ => Token.Array)
+    def arrayP[Q: P]: P[Token] =
+      P("a" ~ "r" ~ "r" ~ "a" ~ "y").map(_ => Token.Array)
 
     /** Operators **/
     def assignP[Q: P]: P[Token] = P("=").map(_ => Token.Assign)
@@ -75,12 +77,33 @@ object Lexer {
     //
     def stringTokenP[Q: P]: P[Token] =
       P((CharIn("A-Z") | CharIn("a-z")).rep(1).!.map(s => Token.StringToken(s)))
-    // This is not right: it will not match 0
+
+    //TODO: We probably do not want ~End here, but without it,
+    //"0123" parses to "0"
+    private def zeroP[Q: P]: P[String] = P("0" ~ End).!
+    private def intP[Q: P]: P[String] =
+      (CharIn("1-9") ~ CharIn("0-9").rep(1)).!
+
     def intTokenP[Q: P]: P[Token] = {
-      P((CharIn("1-9") ~ CharIn("0-9").rep(1)).!.map(s => Token.IntToken(s.toInt)))
+      P(zeroP | intP).map(s => Token.IntToken(s.toInt))
     }
+    // An identifier is a sequence of letters, digits, underscores,
+    // starting with a letter.
+    private def letterP[Q: P]: P[String] =
+      P(CharIn("A-Z") | CharIn("a-z")).!
+    private def digitP[Q: P]: P[String] =
+      P(CharIn("0-9")).!
+    private def underscoreP[Q: P]: P[String] =
+      P("_").!
+    private def letterDigitUnderscoreP[Q: P]: P[(String, Seq[String])] =
+      P(letterP ~ (letterP | digitP | underscoreP).rep(1))
+
     def idTokenP[Q: P]: P[Token] =
-      P((CharIn("A-Z") | CharIn("a-z")).rep(1).!.map(s => Token.Id(s)))
+      P(letterDigitUnderscoreP).map{ case (first, rest)  =>
+        val s = first ++ rest.foldLeft("")(_ ++ _)
+        Token.Id(s)
+      }
+
     def eofP[Q: P]: P[Token] = P(End).map(_ => Token.EOF)
 }
 
